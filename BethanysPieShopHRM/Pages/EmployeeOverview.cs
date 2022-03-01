@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using BethanysPieShopHRM.Components;
 using BethanysPieShopHRM.Services;
 using BethanysPieShopHRM.Shared;
 using Microsoft.AspNetCore.Components;
@@ -94,11 +95,24 @@ public partial class EmployeeOverview
         Employees = new List<Employee> { e1, e2 };
     }
 
+    public AddEmployeeDialog AddEmployeeDialog { get; set; }
+
+    public async Task QuickAddEmployee()
+    {
+        AddEmployeeDialog.Show();
+    }
+
     protected override async Task OnInitializedAsync()
     {
         Console.WriteLine(this.GetType().Name);
         InitializeCountries();
         InitializeJobCategories();
         Employees = await EmployeeDataService.GetAllEmployees();
+    }
+
+    public async Task AddEmployeeDialogOnClose()
+    {
+        Employees = (await EmployeeDataService.GetAllEmployees());
+        StateHasChanged();
     }
 }
