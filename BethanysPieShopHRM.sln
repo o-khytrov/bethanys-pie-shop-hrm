@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BethanysPieShopHRM", "BethanysPieShopHRM\BethanysPieShopHRM.csproj", "{FA48DC9C-0D9F-43D8-838E-4985CBED70D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BethanysPieShopHRM.Shared", "BethanysPieShopHRM.Shared\BethanysPieShopHRM.Shared.csproj", "{A0E9DC7D-BF40-41C5-96BD-E15A83DC0ECE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BethanysPieShopHRM.Api", "BethanysPieShopHRM.Api\BethanysPieShopHRM.Api.csproj", "{37356578-0346-47A3-B414-4F57169EED3B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Env", "Env", "{84CA3A66-4F5B-4766-B276-C74288C3257F}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA48DC9C-0D9F-43D8-838E-4985CBED70D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA48DC9C-0D9F-43D8-838E-4985CBED70D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA48DC9C-0D9F-43D8-838E-4985CBED70D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA48DC9C-0D9F-43D8-838E-4985CBED70D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0E9DC7D-BF40-41C5-96BD-E15A83DC0ECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0E9DC7D-BF40-41C5-96BD-E15A83DC0ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0E9DC7D-BF40-41C5-96BD-E15A83DC0ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0E9DC7D-BF40-41C5-96BD-E15A83DC0ECE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37356578-0346-47A3-B414-4F57169EED3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37356578-0346-47A3-B414-4F57169EED3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37356578-0346-47A3-B414-4F57169EED3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37356578-0346-47A3-B414-4F57169EED3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
