@@ -1,0 +1,27 @@
+@page "/employeeoverviewvirtual"
+<h3>EmployeeOverviewVirtual</h3>
+@if (Employees is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>EmployeeId</th>
+            <th>First name</th>
+            <th>Last name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <Virtualize Items="Employees" ItemSize="itemHeight">
+            <tr @key="@context.GetHashCode()">
+                <td>@context.EmployeeId</td>
+                <td>@context.FirstName</td>
+                <td>@context.LastName</td>
+            </tr>
+        </Virtualize>
+        </tbody>
+    </table>
+}

@@ -1,6 +1,7 @@
 using BethanysPieShopHRM.Services;
 using BethanysPieShopHRM.Shared;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace BethanysPieShopHRM.Pages;
 
@@ -38,6 +39,15 @@ public partial class EmployeeEdit
 
     public string StatusMessage { get; set; }
 
+    private IReadOnlyCollection<IBrowserFile> selectedFiles;
+
+    public ElementReference LastNameInput { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await LastNameInput.FocusAsync();
+    }
+
     protected override async Task OnInitializedAsync()
     {
         Saved = false;
@@ -71,6 +81,16 @@ public partial class EmployeeEdit
         Employee.JobCategoryId = int.Parse(JobCategoryId);
         if (Employee.EmployeeId == 0) // new
         {
+            if (selectedFiles?.Count > 0)
+            {
+                var file = selectedFiles.First();
+                await using var stream = file.OpenReadStream();
+                await using var ms = new MemoryStream();
+                await stream.CopyToAsync(ms);
+                Employee.ImageName = file.Name;
+                Employee.ImageContent = ms.ToArray();
+            }
+
             var newEmployee = await EmployeeDataService.AddEmployee(Employee);
             if (newEmployee is not null)
             {
@@ -103,5 +123,12 @@ public partial class EmployeeEdit
     private void NavigateToOverview()
     {
         NavigationManager.NavigateTo("/employeeoverview");
+    }
+
+    private void OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        selectedFiles = e.GetMultipleFiles();
+        StatusMessage = $"{selectedFiles.Count} file(s) selected";
+        StateHasChanged();
     }
 }

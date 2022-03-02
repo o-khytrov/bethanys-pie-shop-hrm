@@ -9,8 +9,13 @@
             <DataAnnotationsValidator></DataAnnotationsValidator>
             <ValidationSummary></ValidationSummary>
             <div class="form-group row">
+                <label for="image" class="col-sm-3">Select image:</label>
+                <InputFile id="image" OnChange="OnInputFileChange"></InputFile>
+            </div>
+            <div class="form-group row">
                 <label for="lastName" class="col-sm-3">Last name:</label>
-                <InputText id="lastName" class="form-control col-sm-8" placehoder="Enter last name" @bind-Value="@Employee.LastName"></InputText>
+                @*<InputText id="lastName" class="form-control col-sm-8" placehoder="Enter last name" @bind-Value="@Employee.LastName"></InputText>*@
+                <input type="text" id="lastName" @ref="LastNameInput" class="form-control col-sm-8" @bind="@Employee.LastName"/>
                 <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Employee.LastName)"></ValidationMessage>
             </div>
             <div class="form-group row">
@@ -76,15 +81,22 @@
                 </label>
             </div>
             <div class="form-group row">
-                <label for="gender" class="col-sm-3">Matrial status:</label>
-                <InputSelect id="gender" class="form-control col-sm-8" placehoder="Enter gender" @bind-Value="@Employee.Gender">
+                <label for="gender" class="col-sm-3">Gender:</label>
+                @*<InputSelect id="gender" class="form-control col-sm-8" placehoder="Enter gender" @bind-Value="@Employee.Gender">
                     <option value="@(Gender.Male)">Male</option>
                     <option value="@(Gender.Female)">Female</option>
                     <option value="@(Gender.Other)">Other</option>
-                </InputSelect>
+                </InputSelect>*@
+                <InputRadioGroup Name="genderRadioGroup" @bind-Value="@Employee.Gender">
+                    @foreach (var gender in (Gender[]) Enum.GetValues(typeof(Gender)))
+                    {
+                        <InputRadio Name="genderRadioGroup" Value="gender"/>
+                        @gender
+                    }
+                </InputRadioGroup>
             </div>
             <div class="form-group row">
-                <label for="maritalstatus" class="col-sm-3">Gender:</label>
+                <label for="maritalstatus" class="col-sm-3">Marital status:</label>
                 <InputSelect id="maritalstatus" class="form-control col-sm-8" placehoder="Enter marital status" @bind-Value="@Employee.MaritalStatus">
                     <option value="@(MaritalStatus.Married)">Married</option>
                     <option value="@(MaritalStatus.Single)">Single</option>

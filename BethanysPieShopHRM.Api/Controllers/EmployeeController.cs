@@ -1,5 +1,7 @@
 ﻿using BethanysPieShopHRM.Api.Models;
 using BethanysPieShopHRM.Shared;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BethanysPieShopHRM.Api.Controllers
@@ -10,9 +12,26 @@ namespace BethanysPieShopHRM.Api.Controllers
     {
         private readonly IEmployeeRepository _employeeRepository;
 
-        public EmployeeController(IEmployeeRepository employeeRepository)
+        private IWebHostEnvironment _webHostEnvironment;
+
+        private IHttpContextAccessor _httpContextAccessor;
+
+        public EmployeeController
+        (
+            IEmployeeRepository employeeRepository,
+            IWebHostEnvironment webHostEnvironment,
+            IHttpContextAccessor httpContextAccessor
+        )
         {
             _employeeRepository = employeeRepository;
+            _webHostEnvironment = webHostEnvironment;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        [HttpGet("long")]
+        public IActionResult GetLongEmployeeList(int count = 1000)
+        {
+            return Ok(_employeeRepository.GetLongEmployeeList(count));
         }
 
         [HttpGet]
@@ -40,6 +59,15 @@ namespace BethanysPieShopHRM.Api.Controllers
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            var currentUrl = _httpContextAccessor.HttpContext.Request.Host.Value;
+            var path = $"{_webHostEnvironment.WebRootPath}//uploads//{employee.ImageName}";
+            using (var stream = System.IO.File.Create(path))
+            {
+                stream.Write(employee.ImageContent, 0, employee.ImageContent.Length);
+            }
+
+            employee.ImageName = $"http://{currentUrl}/uploads/{employee.ImageName}";
 
             var createdEmployee = _employeeRepository.AddEmployee(employee);
 
@@ -82,7 +110,7 @@ namespace BethanysPieShopHRM.Api.Controllers
 
             _employeeRepository.DeleteEmployee(id);
 
-            return NoContent();//success
+            return NoContent(); //success
         }
     }
 }

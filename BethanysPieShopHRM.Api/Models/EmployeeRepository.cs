@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BethanysPieShopHRM.Shared;
 
@@ -28,6 +29,23 @@ namespace BethanysPieShopHRM.Api.Models
             var addedEntity = _appDbContext.Employees.Add(employee);
             _appDbContext.SaveChanges();
             return addedEntity.Entity;
+        }
+
+        public IEnumerable<Employee> GetLongEmployeeList(int count = 1000)
+        {
+            var employees = new List<Employee>();
+            for (int i = 0; i < count; i++)
+            {
+                var employee = new Employee()
+                {
+                    EmployeeId = i,
+                    FirstName = RandomString(10),
+                    LastName = RandomString(18)
+                };
+                employees.Add(employee);
+            }
+
+            return employees;
         }
 
         public Employee UpdateEmployee(Employee employee)
@@ -68,6 +86,14 @@ namespace BethanysPieShopHRM.Api.Models
 
             _appDbContext.Employees.Remove(foundEmployee);
             _appDbContext.SaveChanges();
+        }
+
+        private static Random _random = new();
+
+        private static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTWVXZY";
+            return new string(Enumerable.Repeat(chars, length).Select(x => x[_random.Next(x.Length)]).ToArray());
         }
     }
 }

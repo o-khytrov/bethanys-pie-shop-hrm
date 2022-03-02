@@ -7,6 +7,7 @@ namespace BethanysPieShopHRM.Services;
 public interface IEmployeeDataService
 {
     Task<IEnumerable<Employee>?> GetAllEmployees();
+    Task<IEnumerable<Employee>?> GetLongEmployeeList();
     Task<Employee?> GetEmployeeDetails(int employeeId);
     Task<Employee> AddEmployee(Employee employee);
     Task UpdateEmployee(Employee employee);
@@ -25,6 +26,11 @@ public class EmployeeDataService : IEmployeeDataService
     public async Task<IEnumerable<Employee>?> GetAllEmployees()
     {
         return await _httpClient.GetFromJsonAsync<IEnumerable<Employee>>("api/employee");
+    }
+
+    public async Task<IEnumerable<Employee>?> GetLongEmployeeList()
+    {
+        return await _httpClient.GetFromJsonAsync<IEnumerable<Employee>>("api/employee/long");
     }
 
     public async Task<Employee?> GetEmployeeDetails(int employeeId)
